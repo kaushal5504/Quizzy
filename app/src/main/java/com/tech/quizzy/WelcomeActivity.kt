@@ -23,7 +23,7 @@ class WelcomeActivity : AppCompatActivity() {
 
         android.os.Handler().postDelayed(object :Runnable{
             override fun run() {
-                intent = Intent(this@WelcomeActivity,MainActivity::class.java)
+                intent = Intent(this@WelcomeActivity,LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             }

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Quizzy</string>
+    <string name="or">OR</string>
+    <string name="account">Don\'t have account yet ? <font color ="#FF000000"><b><u><i>SignUp</i></u></b></font></string>
+    <string name="forgot_password"><b><u>Forgot Password ?</u></b></string>
 </resources>
