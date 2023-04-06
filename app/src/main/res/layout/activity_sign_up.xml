@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".SignUpActivity">
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="211dp"
-        android:layout_height="144dp"
+        android:layout_width="181dp"
+        android:layout_height="97dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
         android:scaleType="fitCenter"
@@ -24,7 +24,7 @@
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/layout_shape"
         android:gravity="center"
         android:orientation="vertical"
@@ -43,7 +43,7 @@
             app:startIconDrawable="@drawable/baseline_mail_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputLoginEmail"
+                android:id="@+id/textInputSignUpEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -65,7 +65,7 @@
             app:startIconDrawable="@drawable/baseline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputLoginPassword"
+                android:id="@+id/textInputSignUpPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
@@ -76,15 +76,22 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/buttonSignin"
+            android:id="@+id/buttonSignUp"
             android:layout_width="200dp"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/white"
-            android:text="Sign In"
+            android:text="Sign Up"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="18sp" />
+
+        <ProgressBar
+            android:id="@+id/progressBarSignUp"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -115,6 +122,7 @@
 
         </LinearLayout>
 
+
         <com.google.android.gms.common.SignInButton
             android:id="@+id/buttonSigninGoogle"
             android:layout_width="150dp"
@@ -122,21 +130,14 @@
             android:layout_marginTop="10dp" />
 
         <TextView
-            android:id="@+id/textViewSignUp"
+            android:id="@+id/textViewSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="@string/account"
+            android:text="@string/account_login"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/textViewForgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/forgot_password"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
