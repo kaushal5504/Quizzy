@@ -26,7 +26,8 @@
         android:text="Quizzy"
         android:textColor="@color/newcolor"
         android:textSize="50sp"
-        android:textStyle="italic"
+
+        android:padding="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.498"
