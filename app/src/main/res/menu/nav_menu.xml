@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn ="navigation_view">
+
+
+
+
+
+
+
+
+    <item
+        android:title="Profile">
+        <menu>
+            <item
+                android:id="@+id/nav_login"
+                android:title="Login"/>
+
+        </menu>
+    </item>
+
+
+    <item
+        android:title="Contact us">
+        <menu>
+            <item
+                android:id="@+id/nav_chat"
+                android:title="chat"/>
+
+            <item
+                android:id="@+id/nav_support"
+                android:title="support"/>
+
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/Graphs"
+        android:title="Graphs"/>
+
+<item
+    android:id="@+id/signout"
+    android:title="SignOut"/>
+<!--    android:icon="@drawable/baseline_output_24"/>-->
+
+
+
+
+
+</menu>

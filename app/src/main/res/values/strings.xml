@@ -4,4 +4,6 @@
     <string name="account">Don\'t have account yet ? <font color="#FF000000"><b><u><i>SignUp</i></u></b></font></string>
     <string name="account_login">Already have account? <font color="#FF000000"><b><u><i>SignIn</i></u></b></font></string>
     <string name="forgot_password"><b><u>Forgot Password ?</u></b></string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>

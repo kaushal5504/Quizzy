@@ -22,8 +22,11 @@ import kotlin.random.Random
 class QuizActivity : AppCompatActivity() {
     lateinit var quizBinding: ActivityQuizBinding
 
+    //var topicName : String? =intent.getStringExtra("Graphs")
+
     val database =FirebaseDatabase.getInstance()
-    val databaseReference =database.reference.child("Graph")
+   // val databaseReference = topicName?.let { database.reference.child(it) }
+    val databaseReference = database.reference.child("Graph")
 
     var question =""
     var optionA=""
@@ -182,7 +185,7 @@ class QuizActivity : AppCompatActivity() {
         restoreOptions()
         quizBinding.buttonCheck.isEnabled = false
 
-        databaseReference.addValueEventListener(object :ValueEventListener{
+        databaseReference?.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 questionCount = snapshot.childrenCount.toInt()
@@ -213,9 +216,7 @@ class QuizActivity : AppCompatActivity() {
                     startTimer()
 
 
-                }
-                else
-                {
+                } else {
                     val dialogMessage =AlertDialog.Builder(this@QuizActivity)
                     dialogMessage.setTitle("Quizzy")
                     dialogMessage.setMessage("Congratulations!!\nYou have reached the end of module. Do you want to see results?")
