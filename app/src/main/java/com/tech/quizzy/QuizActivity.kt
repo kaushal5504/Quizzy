@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -14,8 +15,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.tech.quizzy.databinding.ActivityQuizBinding
+import java.security.KeyStore.TrustedCertificateEntry
 import kotlin.random.Random
 
+@Suppress("UNREACHABLE_CODE")
 class QuizActivity : AppCompatActivity() {
     lateinit var quizBinding: ActivityQuizBinding
 
@@ -40,6 +43,8 @@ class QuizActivity : AppCompatActivity() {
     private val totalTime =30000L
     var timeContinue = false
     var leftTime =totalTime
+
+    lateinit var choseAnswer:RadioButton
 
     //getting instance of authentication
 
@@ -123,6 +128,9 @@ class QuizActivity : AppCompatActivity() {
         }.start()
         timeContinue =true
     }
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         quizBinding =ActivityQuizBinding.inflate(layoutInflater)
@@ -149,113 +157,55 @@ class QuizActivity : AppCompatActivity() {
 
 
         }
-
-        quizBinding.textViewOption1.setOnClickListener {
+        quizBinding.buttonCheck.setOnClickListener {
+            quizBinding.buttonCheck.isEnabled = false
             pauseTimer()
 
-            userAnswer = "a"
+            var id = findAnswer()
+            var checkId = quizBinding.radioGroup.checkedRadioButtonId
 
-            if(answer == userAnswer)
-            {
-                quizBinding.textViewOption1.setBackgroundColor(Color.GREEN)
+           if(checkId == id)
+           {
+               val radiobutton = findViewById<RadioButton>(checkId)
                 userCorrectAnswer++
                 quizBinding.correctAns.text = userCorrectAnswer.toString()
+               radiobutton.setBackgroundColor(Color.GREEN)
 
-            }
+           }
             else
-            {
-                quizBinding.textViewOption1.setBackgroundColor(Color.RED)
+           {
+               val radiobutton = findViewById<RadioButton>(checkId)
+               radiobutton.setBackgroundColor(Color.RED)
                 userWrongAnswer++
                 quizBinding.wrongAns.text = userWrongAnswer.toString()
-                findAnswer()
+
+           }
 
 
 
-            }
-           disableClickableOfOptions()
-        }
-        quizBinding.textViewOption2.setOnClickListener {
-
-            pauseTimer()
-            userAnswer = "b"
-            if(answer == userAnswer)
-            {
-                quizBinding.textViewOption2.setBackgroundColor(Color.GREEN)
-                userCorrectAnswer++
-                quizBinding.correctAns.text=userCorrectAnswer.toString()
-
-
-            }
-            else
-            {
-                quizBinding.textViewOption2.setBackgroundColor(Color.RED)
-                userWrongAnswer++
-                quizBinding.wrongAns.text = userWrongAnswer.toString()
-                findAnswer()
-
-
-            }
-            disableClickableOfOptions()
-
-           // disableAllClickable()
 
 
         }
-        quizBinding.textViewOption3.setOnClickListener {
 
-            pauseTimer()
-            userAnswer = "c"
+        quizBinding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
 
-            if(answer == userAnswer)
-            {
-                quizBinding.textViewOption3.setBackgroundColor(Color.GREEN)
-                userCorrectAnswer++
-                quizBinding.correctAns.text=userCorrectAnswer.toString()
+            quizBinding.buttonCheck.isEnabled = true
 
 
+
+            when(checkedId) {
+                R.id.textViewOption1 ->
+                    userAnswer = "a"
+
+                R.id.textViewOption2 ->
+                    userAnswer = "b"
+
+                R.id.textViewOption3 ->
+                    userAnswer = "c"
+
+                R.id.textViewOption4 ->
+                    userAnswer = "d"
             }
-            else
-            {
-                quizBinding.textViewOption3.setBackgroundColor(Color.RED)
-                userWrongAnswer++
-                quizBinding.wrongAns.text = userWrongAnswer.toString()
-                findAnswer()
-
-
-            }
-            disableClickableOfOptions()
-
-          //  disableAllClickable()
-
-
-        }
-        quizBinding.textViewOption4.setOnClickListener {
-           pauseTimer()
-            userAnswer = "d"
-
-            if(answer == userAnswer)
-            {
-                quizBinding.textViewOption4.setBackgroundColor(Color.GREEN)
-                userCorrectAnswer++
-                quizBinding.correctAns.text=userCorrectAnswer.toString()
-
-
-               // disableAllClickable()
-
-            }
-            else
-            {
-                quizBinding.textViewOption4.setBackgroundColor(Color.RED)
-                userWrongAnswer++
-                quizBinding.wrongAns.text = userWrongAnswer.toString()
-                findAnswer()
-
-
-              //  disableAllClickable()
-            }
-            disableClickableOfOptions()
-
-            //disableAllClickable()
 
         }
 
@@ -266,6 +216,8 @@ class QuizActivity : AppCompatActivity() {
 
     private fun gameLogic()
     {
+        quizBinding.buttonCheck.isEnabled = false
+        quizBinding.radioGroup.clearCheck()
         restoreOptions()
         databaseReference.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -293,6 +245,7 @@ class QuizActivity : AppCompatActivity() {
                     quizBinding.layout1.visibility = View.VISIBLE
                     quizBinding.layout2.visibility =View.VISIBLE
                     quizBinding.buttonlayout.visibility = View.VISIBLE
+                    quizBinding.buttonCheck.visibility = View.VISIBLE
 
                     startTimer()
 
@@ -333,12 +286,29 @@ class QuizActivity : AppCompatActivity() {
         })
     }
 
-    fun findAnswer(){
-        when(answer){
-            "a"->quizBinding.textViewOption1.setBackgroundColor(Color.GREEN)
-            "b"->quizBinding.textViewOption2.setBackgroundColor(Color.GREEN)
-            "c"->quizBinding.textViewOption3.setBackgroundColor(Color.GREEN)
-            "d"->quizBinding.textViewOption4.setBackgroundColor(Color.GREEN)
+    fun findAnswer(): Int {
+        when(answer) {
+
+            "a" ->
+            {
+                quizBinding.textViewOption1.setBackgroundColor(Color.GREEN)
+                return R.id.textViewOption1
+            }
+            "b" -> {
+                quizBinding.textViewOption2.setBackgroundColor(Color.GREEN)
+                return R.id.textViewOption2
+            }
+            "c" -> {
+                quizBinding.textViewOption3.setBackgroundColor(Color.GREEN)
+                return R.id.textViewOption3
+            }
+            "d" ->
+            {
+                quizBinding.textViewOption4.setBackgroundColor(Color.GREEN)
+                return R.id.textViewOption4
+            }
+            else->
+            return 0
         }
     }
 
@@ -346,15 +316,22 @@ class QuizActivity : AppCompatActivity() {
 
     fun restoreOptions()
     {
-        quizBinding.textViewOption1.setBackgroundColor(Color.WHITE)
-        quizBinding.textViewOption2.setBackgroundColor(Color.WHITE)
-        quizBinding.textViewOption3.setBackgroundColor(Color.WHITE)
-        quizBinding.textViewOption4.setBackgroundColor(Color.WHITE)
+        quizBinding.textViewOption1.setBackgroundColor(Color.BLUE)
+        quizBinding.textViewOption2.setBackgroundColor(Color.BLUE)
+        quizBinding.textViewOption3.setBackgroundColor(Color.BLUE)
+        quizBinding.textViewOption4.setBackgroundColor(Color.BLUE)
 
-        quizBinding.textViewOption1.isContextClickable =true
-        quizBinding.textViewOption2.isContextClickable =true
-        quizBinding.textViewOption3.isContextClickable =true
-        quizBinding.textViewOption4.isContextClickable =true
+        //clickacle functiions commented
+
+//        quizBinding.textViewOption1.isContextClickable =true
+//        quizBinding.textViewOption2.isContextClickable =true
+//        quizBinding.textViewOption3.isContextClickable =true
+//        quizBinding.textViewOption4.isContextClickable =true
+
+    }
+
+    fun checkAnswer(checkedId :Int , )
+    {
 
     }
 }
