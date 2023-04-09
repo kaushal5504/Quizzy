@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.tech.quizzy.databinding.ActivityQuizBinding
+import kotlin.random.Random
 
 class QuizActivity : AppCompatActivity() {
     lateinit var quizBinding: ActivityQuizBinding
@@ -48,6 +49,8 @@ class QuizActivity : AppCompatActivity() {
     //new dabtabase reference to store score of games
     val scoreRef = database.reference
 
+
+   // val questions = HashSet<Int>()
     //function to send user score to database
     fun sendScore()
     {
@@ -124,6 +127,11 @@ class QuizActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         quizBinding =ActivityQuizBinding.inflate(layoutInflater)
         setContentView(quizBinding.root)
+
+//        do{
+//            val number = Random.nextInt(1,6)
+//            questions.add(number)
+//        }while(questions.size<=5)
 
         gameLogic()
 
@@ -264,7 +272,7 @@ class QuizActivity : AppCompatActivity() {
 
                 questionCount = snapshot.childrenCount.toInt()
 
-                if(questionNumber<=questionCount) {
+                if(questionNumber <= questionCount) {
 
 
                     question = snapshot.child(questionNumber.toString()).child("que").value.toString()
