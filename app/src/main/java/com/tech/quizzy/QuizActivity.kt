@@ -75,59 +75,7 @@ class QuizActivity : AppCompatActivity() {
 
     }
 
-    fun disableClickableOfOptions()
-    {
-        quizBinding.textViewOption1.isClickable = false
-        quizBinding.textViewOption2.isClickable = false
-        quizBinding.textViewOption3.isClickable = false
-        quizBinding.textViewOption4.isClickable = false
-    }
-    private fun updateCountDownText()
-    {
-        val remainingTime :Int = (leftTime/1000).toInt()
-        quizBinding.time.text = remainingTime.toString()
 
-    }
-    private fun resetTimer()
-    {
-        pauseTimer()
-        leftTime = totalTime
-        updateCountDownText()
-    }
-    private fun pauseTimer()
-    {
-
-        timer.cancel()
-        timeContinue  = false
-    }
-
-    private fun startTimer()
-    {
-        timer =object : CountDownTimer(leftTime,1000)
-        {
-            override fun onTick(millisUntilFinished: Long) {
-
-                leftTime = millisUntilFinished
-                updateCountDownText()
-
-
-
-            }
-
-            override fun onFinish() {
-
-
-                disableClickableOfOptions()
-                resetTimer()
-                updateCountDownText()
-
-                quizBinding.textViewQuestion.text ="Sorry Time is up ! Continue"
-                timeContinue=false
-            }
-
-        }.start()
-        timeContinue =true
-    }
 
 
 
@@ -146,7 +94,14 @@ class QuizActivity : AppCompatActivity() {
 
         quizBinding.buttonNext.setOnClickListener {
 
+            quizBinding.buttonCheck.isEnabled = false
+
+            quizBinding.textViewOption1.isEnabled =true
+            quizBinding.textViewOption2.isEnabled =true
+            quizBinding.textViewOption3.isEnabled =true
+            quizBinding.textViewOption4.isEnabled =true
             resetTimer()
+
             gameLogic()
 
         }
@@ -157,12 +112,13 @@ class QuizActivity : AppCompatActivity() {
 
 
         }
+
         quizBinding.buttonCheck.setOnClickListener {
             quizBinding.buttonCheck.isEnabled = false
             pauseTimer()
 
-            var id = findAnswer()
-            var checkId = quizBinding.radioGroup.checkedRadioButtonId
+            val id = findAnswer()
+            val checkId = quizBinding.radioGroup.checkedRadioButtonId
 
            if(checkId == id)
            {
@@ -180,6 +136,11 @@ class QuizActivity : AppCompatActivity() {
                 quizBinding.wrongAns.text = userWrongAnswer.toString()
 
            }
+
+            quizBinding.textViewOption1.isEnabled =false
+            quizBinding.textViewOption2.isEnabled =false
+            quizBinding.textViewOption3.isEnabled =false
+            quizBinding.textViewOption4.isEnabled =false
 
 
 
@@ -216,9 +177,11 @@ class QuizActivity : AppCompatActivity() {
 
     private fun gameLogic()
     {
-        quizBinding.buttonCheck.isEnabled = false
+
         quizBinding.radioGroup.clearCheck()
         restoreOptions()
+        quizBinding.buttonCheck.isEnabled = false
+
         databaseReference.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -330,8 +293,57 @@ class QuizActivity : AppCompatActivity() {
 
     }
 
-    fun checkAnswer(checkedId :Int , )
+    fun disableClickableOfOptions()
+    {
+        quizBinding.textViewOption1.isClickable = false
+        quizBinding.textViewOption2.isClickable = false
+        quizBinding.textViewOption3.isClickable = false
+        quizBinding.textViewOption4.isClickable = false
+    }
+    private fun updateCountDownText()
+    {
+        val remainingTime :Int = (leftTime/1000).toInt()
+        quizBinding.time.text = remainingTime.toString()
+
+    }
+    private fun resetTimer()
+    {
+        pauseTimer()
+        leftTime = totalTime
+        updateCountDownText()
+    }
+    private fun pauseTimer()
     {
 
+        timer.cancel()
+        timeContinue  = false
+    }
+
+    private fun startTimer()
+    {
+        timer =object : CountDownTimer(leftTime,1000)
+        {
+            override fun onTick(millisUntilFinished: Long) {
+
+                leftTime = millisUntilFinished
+                updateCountDownText()
+
+
+
+            }
+
+            override fun onFinish() {
+
+
+                disableClickableOfOptions()
+                resetTimer()
+                updateCountDownText()
+
+                quizBinding.textViewQuestion.text ="Sorry Time is up ! Continue"
+                timeContinue=false
+            }
+
+        }.start()
+        timeContinue =true
     }
 }
